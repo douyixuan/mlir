@@ -112,6 +112,40 @@ define i32 @add(i32 %0, i32 %1) {
 !0 = !{i32 2, !"Debug Info Version", i32 3}
 ```
 
+## From LLVM to MLIR
+
+
+### 🛠️ Mapping MLIR Tools to LLVM Tools
+
+| LLVM Tool | MLIR Tool | Description |
+|-----------|-----------|-------------|
+| `opt` | `mlir-opt` | Performs MLIR-to-MLIR transformations, dialect conversions, and optimizations. |
+| `llvm-dis`(kind of, more like `llc`) | `mlir-translate` | Converts MLIR to/from external IR formats (e.g., LLVM IR). |
+| `lli` | `mlir-cpu-runner` | Runs MLIR code directly for debugging/testing purposes. |
+
+### Typical MLIR Workflow Compared to LLVM Workflow
+
+LLVM Workflow:
+
+```
+C code → clang → LLVM IR → opt → LLVM IR → llc → Executable
+```
+
+MLIR Workflow:
+
+```
+High-level dialect (e.g., Affine/Tensor dialect)
+        │ mlir-opt (lowering & optimization)
+        ▼
+Lower-level dialect (Standard/LLVM dialect)
+        │ mlir-translate
+        ▼
+LLVM IR
+        │ llc/clang
+        ▼
+Executable
+```
+
 ## Getting Help
 
 - Join the LLVM Discord server
